@@ -17,8 +17,8 @@
     <a class="navbar-brand" href="/">Note Taker
     </a>
     <div class="icons">
-      <i class="fas fa-save text-light save-note"></i>
-      <i class="fas fa-pen text-light new-note"></i>
+      <a class=saveNote><i class="fas fa-save text-light save-note"></i></a>
+      <a class="newNote"><i class="fas fa-pen text-light new-note"></i></a>
     </div>
   </nav>
   <div class="container-fluid">
@@ -29,13 +29,31 @@
           </ul>
         </div>
       </div>
-      <div class="col-8">
-        <input class="note-title" placeholder="Note Title" maxlength="28" type="text">
-        <textarea class="note-textarea" placeholder="Note Text"></textarea>
+      <form action = "/api/notes" method = "POST">
+      <div class="note col-8">
+        <input class="note-title" name = "title" placeholder="Note Title" maxlength="28" type="text">
+        <textarea class="note-textarea" name = "text" placeholder="Note Text"></textarea>
       </div>
+    </form>
     </div>
   </div>
   <script src="./assets/js/index.js"></script>
+  <script>
+    $(".saveNote").on("click",()=>{
+      $.get('/api/notes').then(data=>{
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        const note = data[i];
+        $(".list-group").append(`<ul>${note.title}: ${note.text}<ul>`)
+    }
+    })
+    })
+
+    $(".newNote").on("click",()=>{
+      $(".note").html("")
+    })
+   
+  </script>
 </body>
 
 </html>

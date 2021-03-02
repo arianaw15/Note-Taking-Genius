@@ -2,11 +2,16 @@ const express = require("express");
 const path = require("path");
 const PORT = 6464;
 var app = express();
-const db = require("./Develop/db/db.json");
+const fs = require ('fs');
+
+let rawDb = fs.readFileSync('./db/db.json');
+let db = JSON.parse(rawDb);
+var noteId = 0;
 // var notes = db();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'))
 
 app.get('/', function(req, res)
 {res.sendFile(path.join(__dirname, './public/index.html'))
@@ -23,6 +28,7 @@ app.get('/api/notes', (req,res)=>{
 app.post('/api/notes',(req,res)=>{
 const newNote = req.body;
 db.push(newNote);
+nodeId = noteId + 1;
 })
 
 // ===============================================================
