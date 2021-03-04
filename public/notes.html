@@ -31,28 +31,38 @@
       </div>
       <form action = "/api/notes" method = "POST">
       <div class="note col-8">
-        <input class="note-title" name = "title" placeholder="Note Title" maxlength="28" type="text">
-        <textarea class="note-textarea" name = "text" placeholder="Note Text"></textarea>
+        <input class="note-title" id= "noteTitle" name = "title" placeholder="Note Title" maxlength="28" type="text">
+        <textarea class="note-textarea" id = "noteText" name = "text" placeholder="Note Text"></textarea>
       </div>
     </form>
     </div>
   </div>
   <script src="./assets/js/index.js"></script>
   <script>
-    $(".saveNote").on("click",()=>{
-      $.get('/api/notes').then(data=>{
-      console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        const note = data[i];
-        $(".list-group").append(`<ul>${note.title}: ${note.text}<ul>`)
-    }
-    })
-    })
+const saveNote = document.querySelector('.saveNote');
+  saveNote.addEventListener('click', (save) => {
+    save.preventDefault();
+
+let getNotes = {
+      noteTitle: document.getElementById('noteTitle').value.trim(),
+      noteText: document.getElementById('noteText').value.trim(),
+    };
+      fetch('/api/notes',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(getNotes),
+      })
+      .then((response)=>response.json())
+      .then((data)=>{
+        console.log('note added');
+      });
+    });
 
     $(".newNote").on("click",()=>{
       $(".note").html("")
-    })
-   
+    });
   </script>
 </body>
 
