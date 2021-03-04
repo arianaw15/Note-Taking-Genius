@@ -34,4 +34,4 @@ Contact the following with any additional questions:
 - Email: arianaw15@gmail.com
 
 ## Images
-![Note Taker Image](Assets\Note-Taker.PNG).
+![Note Taker Image](Assets/Note-Taker.PNG).
